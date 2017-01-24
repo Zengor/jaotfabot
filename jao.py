@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, Job
+import configparser
 import logging
 import xkcd
 
@@ -11,7 +12,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-config = config.ConfigParser()
+config = configparser.ConfigParser()
 config.read('jao.ini')
 
 def start(bot, update):
@@ -22,21 +23,20 @@ def error(bot, update, error):
     
     
 def main():
-    updater = Updater(config['KEY'][api_key])
+    updater = Updater(config['KEY']['api_key'])
     dp = updater.dispatcher
     
     dp.add_handler(CommandHandler("start", start))
     # setting up xkcd commands
     dp.add_handler(CommandHandler("xkcd", xkcd.get,
-                                  pass_args=True,
-                                  pass_job_queue=True))
+                                  pass_args=True))
 
     dp.add_error_handler(error)
     
     
     #start bot activity
-    update.start_polling()
-    update.idle()
+    updater.start_polling()
+    updater.idle()
 
 if __name__ == "__main__":
     main()
