@@ -12,13 +12,16 @@ import json
 latest_num = 1789
 
 def get_latest():
-    latest = json.load(urllib.request.urlopen("http://xkcd.com/info.0.json").read())
+    response = urllib.request.urlopen("http://xkcd.com/info.0.json")
+    latest =json.loads(response.read()
+                       .decode(response.info().get_param('charset') or 'utf-8'))
     latest_num = latest["num"]
     return latest
 
 def get_comic_json(n):
-    comic = urllib.request.urlopen("http://xkcd.com/{}/info.0.json".format(n)).read()
-    return json.load(comic)
+    response = urllib.request.urlopen("http://xkcd.com/{}/info.0.json".format(n))
+    return json.loads(response.read()
+                      .decode(response.info().get_param('charset') or 'utf-8'))
 
 def post_comic(comic, update):
     text = "Title: {}\nAlt: {}".format(comic['safe_title'], comic['alt'])
