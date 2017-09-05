@@ -5,6 +5,7 @@
 # to interested parties, similar to Discord roles
 import pickle
 from pathlib import Path
+from utility import is_from_admin
 
 def get_chat_roles(chat_data, chat_id):
     return chat_data.setdefault('roles', get_roles_file(chat_id))
@@ -35,6 +36,10 @@ def join(bot, update, args, chat_data):
 def create_role(bot, update, args, chat_data):
     if len(args) == 0:
         update.message.reply_text("Usage: /create_role [role_name]")
+    chat_type = update.message.chat.type
+    if (chat_type == "group" or chat_type == "supergroup") and not is_from_admin(bot, update):
+        update.message.reply_text("Command only available to admins")
+        return
     roles = get_chat_roles(chat_data, update.message.chat_id)
     role = args[0]
     if role in roles:

@@ -6,6 +6,7 @@ import configparser
 import logging
 import xkcd
 import notifyroles
+import utility
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -21,7 +22,6 @@ def start(bot, update):
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
-    
     
 def main():
     updater = Updater(config['KEY']['api_key'])
@@ -43,9 +43,9 @@ def main():
                                   notifyroles.notify,
                                   pass_args=True,
                                   pass_chat_data=True))
-    
+    dp.add_handler(CommandHandler("restart",
+                                  utility.restart))
     dp.add_error_handler(error)
-    
     
     #start bot activity
     updater.start_polling()
