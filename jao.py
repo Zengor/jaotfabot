@@ -5,6 +5,7 @@ from telegram.ext import Updater, CommandHandler, Job
 import configparser
 import logging
 import xkcd
+import notifyroles
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -30,7 +31,19 @@ def main():
     # setting up xkcd commands
     dp.add_handler(CommandHandler("xkcd", xkcd.get,
                                   pass_args=True))
-
+    dp.add_handler(CommandHandler("join",
+                                  notifyroles.join,
+                                  pass_args=True,
+                                  pass_chat_data=True))
+    dp.add_handler(CommandHandler("create_role",
+                                  notifyroles.create_role,
+                                  pass_args=True,
+                                  pass_chat_data=True))
+    dp.add_handler(CommandHandler("notify",
+                                  notifyroles.notify,
+                                  pass_args=True,
+                                  pass_chat_data=True))
+    
     dp.add_error_handler(error)
     
     
