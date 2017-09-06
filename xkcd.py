@@ -48,7 +48,7 @@ def get(bot, update, args):
         comic = get_comic_json(comic_num)
     post_comic(comic, update)
 
-latest_num = get_latest()
+get_latest()
 if __name__ == "__main__":
     n = int(input())
     print(get_latest())
