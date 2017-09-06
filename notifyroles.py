@@ -77,4 +77,14 @@ def notify(bot, update, args, chat_data):
     for username in roles[role]:
         string += username + " "
     update.message.reply_text(string)
+
+def list_roles(bot, update, chat_data):
+    roles = get_chat_roles(chat_data, update.message.chat_id)
+    if not roles:
+        update.message.reply_text("No roles for this server")
+        return
+    response = ""
+    for role,members in roles.items():
+        response += "Role {}: {} members\n".format(role, len(members))
+    update.message.reply_text(response)
     
