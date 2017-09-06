@@ -43,6 +43,10 @@ def main():
                                   notifyroles.notify,
                                   pass_args=True,
                                   pass_chat_data=True))
+    dp.add_handler(CommandHandler("leave",
+                                  notifyroles.leave,
+                                  pass_args=True,
+                                  pass_chat_data=True))
     dp.add_handler(CommandHandler("restart",
                                   utility.restart))
     dp.add_error_handler(error)
