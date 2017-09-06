@@ -42,10 +42,13 @@ def get(bot, update, args):
             comic_num = int(args[0])
         except:
             update.message.reply_text("Usage: /xkcd [number]")
-
-    comic = get_comic_json(comic_num)
+    if comic_num == 0:
+        comic = get_latest()
+    else:
+        comic = get_comic_json(comic_num)
     post_comic(comic, update)
 
+latest_num = get_latest()
 if __name__ == "__main__":
     n = int(input())
     print(get_latest())
