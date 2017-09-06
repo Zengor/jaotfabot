@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from telegram.ext import Updater, CommandHandler, Job
+from functools import wraps
+import os
+import time
+import sys
 import configparser
 import logging
 import xkcd
@@ -47,13 +51,32 @@ def main():
                                   notifyroles.leave,
                                   pass_args=True,
                                   pass_chat_data=True))
+    dp.add_handler(CommandHandler("roles",
+                                  notifyroles.list_roles,
+                                  pass_chat_data=True))
     dp.add_handler(CommandHandler("restart",
-                                  utility.restart))
+                                  restart))
     dp.add_error_handler(error)
     
     #start bot activity
     updater.start_polling()
     updater.idle()
+
+def restricted(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        user_id = update.effective_user.id
+        if str(user_id) not in config['KEY']['higher_privileges']:
+            print("Unauthorized access denied for {}.".format(user_id))
+            return
+        return func(bot, update, *args, **kwargs)
+    return wrapped
+
+@restricted
+def restart(bot, update):
+    bot.send_message(update.message.chat_id, "Bot is restarting...")
+    time.sleep(0.2)
+    os.execl(sys.executable, sys.executable, *sys.argv)
 
 if __name__ == "__main__":
     main()
