@@ -36,7 +36,7 @@ def join(bot, update, args, chat_data):
 
 def leave(bot, update, args, chat_data):
     if len(args) == 0:
-        update.message.reply_text("Usage: /create_role [role_name]")
+        update.message.reply_text("Usage: /leave [role_name]")
     roles = get_chat_roles(chat_data, update.message.chat_id)
     role = args[0]
     if role not in roles:
