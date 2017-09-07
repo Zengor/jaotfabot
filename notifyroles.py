@@ -77,7 +77,7 @@ def notify(bot, update, args, chat_data):
         string = role+": "+ ' '.join(args[1:])+"\n"
     else:
         string = "Calling role " + role +"\n"
-    for username in roles[role]:
+    for username in (users for users in roles[role] if users != update.effective_user.name):
         string += username + " "
     update.message.reply_text(string)
 
