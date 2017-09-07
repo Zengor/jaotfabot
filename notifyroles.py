@@ -73,7 +73,10 @@ def notify(bot, update, args, chat_data):
     if role not in roles:
         update.message.reply_text("Role does not exist")
         return
-    string = "Calling role "+role+": "
+    if role[1:]:
+        string = role+": "+ args[1:]"\n"
+    else:
+        string = "Calling role " + role +"\n"
     for username in roles[role]:
         string += username + " "
     update.message.reply_text(string)
