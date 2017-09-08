@@ -51,8 +51,7 @@ def leave(bot, update, args, chat_data):
 def create_role(bot, update, args, chat_data):
     if len(args) == 0:
         update.message.reply_text("Usage: /create_role [role_name]")
-    chat_type = update.message.chat.type
-    if (chat_type == "group" or chat_type == "supergroup") and not is_from_admin(bot, update):
+    if not is_from_admin(bot, update):
         update.message.reply_text("Command only available to admins")
         return
     roles = get_chat_roles(chat_data, update.message.chat_id)
@@ -91,3 +90,18 @@ def list_roles(bot, update, chat_data):
         response += "Role {}: {} members\n".format(role, len(members))
     update.message.reply_text(response)
     
+
+def delete_role(bot, update, args, chat_data):
+    if len(args) == 0:
+        update.message.reply_text("Usage: /create_role [role_name] (case sensitive, just as a form of confirmation)")
+    if not is_from_admin(bot,update):
+        update.message.reply_text("Command only available to admins")
+        return
+    roles = get_chat_roles(chat_data, update.message.chat_id)
+    role = args[0]
+    if role in roles:
+        update.message.reply_text("Deleting role "+role)
+        del roles[role]
+    else:
+        update.message.reply_text("No such role.")
+        

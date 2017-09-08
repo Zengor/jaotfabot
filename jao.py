@@ -54,6 +54,11 @@ def main():
     dp.add_handler(CommandHandler("roles",
                                   notifyroles.list_roles,
                                   pass_chat_data=True))
+    dp.add_handler(CommandHandler("delete_role",
+                                  notifyroles.delete_role,
+                                  pass_args=True,
+                                  pass_chat_data=True))
+    
     dp.add_handler(CommandHandler("restart",
                                   restart))
     dp.add_error_handler(error)
