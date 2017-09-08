@@ -69,8 +69,8 @@ def notify(bot, update, args, chat_data):
         update.message.reply_text("Usage: /notify [role_name]")
         return
     roles = get_chat_roles(chat_data, update.message.chat_id)
-    role = args[0]
-    if role not in roles:
+    role = args[0].lower()
+    if role not in ( r.lower() for r in roles ):
         update.message.reply_text("Role does not exist")
         return
     if args[1:]:
