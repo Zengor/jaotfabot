@@ -64,7 +64,8 @@ def main():
     dp.add_error_handler(error)
     
     #start bot activity
-    updater.start_polling()
+    #clean means we ignore updates sent while the bot was off
+    updater.start_polling(clean=True)
     updater.idle()
 
 def restricted(func):
