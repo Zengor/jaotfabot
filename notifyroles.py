@@ -102,6 +102,7 @@ def delete_role(bot, update, args, chat_data):
     if role in roles:
         update.message.reply_text("Deleting role "+role)
         del roles[role]
+        save_roles_file(chat_data, update.message.chat_id)
     else:
         update.message.reply_text("No such role.")
 
