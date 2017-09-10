@@ -42,11 +42,11 @@ def leave(bot, update, args, chat_data):
     if role not in roles:
         update.message.reply_text("Role does not exist")
         return
-    if update.effective_user.name not in role:
+    if update.effective_user.name not in roles[role]:
         update.message.reply_text("You are not in that role")
         return
     roles[role].remove(update.effective_user.name)
-    update.message.reply_text("Removed role "+role)
+    update.message.reply_text("Removed from role "+role)
     
 def create_role(bot, update, args, chat_data):
     if len(args) == 0:
