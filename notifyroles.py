@@ -104,4 +104,19 @@ def delete_role(bot, update, args, chat_data):
         del roles[role]
     else:
         update.message.reply_text("No such role.")
-        
+
+def command_dict(command,func):
+    return {"command":command,"callback":func }
+def get_commands():
+    args_dict = { "pass_args": True,
+                  "pass_chat_data": True }
+    commands =[ command_dict("join",join),
+                command_dict("create_role",create_role),
+                command_dict("notify",notify),
+                command_dict("leave",leave),
+                command_dict("roles",list_roles),
+                command_dict("delete_role",delete_role),]
+    for c in commands:
+        c.update(args_dict)
+    del commands[-2]["pass_args"]
+    return commands

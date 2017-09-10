@@ -28,37 +28,17 @@ def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
     
 def main():
-    updater = Updater(config['KEY']['api_key'])
+    updater = Updater(token=config['KEY']['api_key'])
     dp = updater.dispatcher
     
     dp.add_handler(CommandHandler("start", start))
     # setting up xkcd commands
     dp.add_handler(CommandHandler("xkcd", xkcd.get,
                                   pass_args=True))
-    dp.add_handler(CommandHandler("join",
-                                  notifyroles.join,
-                                  pass_args=True,
-                                  pass_chat_data=True))
-    dp.add_handler(CommandHandler("create_role",
-                                  notifyroles.create_role,
-                                  pass_args=True,
-                                  pass_chat_data=True))
-    dp.add_handler(CommandHandler("notify",
-                                  notifyroles.notify,
-                                  pass_args=True,
-                                  pass_chat_data=True))
-    dp.add_handler(CommandHandler("leave",
-                                  notifyroles.leave,
-                                  pass_args=True,
-                                  pass_chat_data=True))
-    dp.add_handler(CommandHandler("roles",
-                                  notifyroles.list_roles,
-                                  pass_chat_data=True))
-    dp.add_handler(CommandHandler("delete_role",
-                                  notifyroles.delete_role,
-                                  pass_args=True,
-                                  pass_chat_data=True))
     
+    for command in notifyroles.get_commands():
+        dp.add_handler(CommandHandler(**command))
+        
     dp.add_handler(CommandHandler("restart",
                                   restart))
     dp.add_error_handler(error)
