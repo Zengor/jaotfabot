@@ -8,6 +8,7 @@ def get_admin_ids(bot, chat_id):
 def is_from_admin(bot, update):
     if update.message.chat.type == "group" or \
        update.message.chat.type == "supergroup":
-        return update.message.from_user.id in get_admin_ids(bot, update.effective_chat.id)
+        return update.message.from_user.id in get_admin_ids(bot,
+                                                            update.message.chat.id)
     return True
         
