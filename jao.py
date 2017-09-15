@@ -51,7 +51,7 @@ def main():
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        user_id = update.effective_user.id
+        user_id = update.from_user.id
         if str(user_id) not in config['KEY']['higher_privileges']:
             print("Unauthorized access denied for {}.".format(user_id))
             return
