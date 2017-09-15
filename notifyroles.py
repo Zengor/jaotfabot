@@ -30,7 +30,7 @@ def join(bot, update, args, chat_data):
     if role not in roles:
         update.message.reply_text("Role does not exist")
         return
-    roles[role].add(update.effective_user.name)
+    roles[role].add(update.message.from_user.name)
     update.message.reply_text("Joined role "+role)
     save_roles_file(chat_data, update.message.chat_id)
 
@@ -42,10 +42,10 @@ def leave(bot, update, args, chat_data):
     if role not in roles:
         update.message.reply_text("Role does not exist")
         return
-    if update.effective_user.name not in roles[role]:
+    if update.message.from_user.name not in roles[role]:
         update.message.reply_text("You are not in that role")
         return
-    roles[role].remove(update.effective_user.name)
+    roles[role].remove(update.message.from_user.name)
     update.message.reply_text("Removed from role "+role)
     
 def create_role(bot, update, args, chat_data):
@@ -76,7 +76,8 @@ def notify(bot, update, args, chat_data):
         string = role+": "+ ' '.join(args[1:])+"\n"
     else:
         string = "Calling role " + role +"\n"
-    for username in (users for users in roles[role] if users != update.effective_user.name):
+    for username in (user for user in roles[role]
+                     if user != update.message.from_user.name):
         string += username + " "
     update.message.reply_text(string)
 
