@@ -51,7 +51,7 @@ def main():
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        user_id = update.from_user.id
+        user_id = update.message.from_user.id
         if str(user_id) not in config['KEY']['higher_privileges']:
             print("Unauthorized access denied for {}.".format(user_id))
             return
@@ -60,7 +60,7 @@ def restricted(func):
 
 @restricted
 def restart(bot, update):
-    bot.send_message(update.message.chat_id, "Bot is restarting...")
+    bot.send_message(update.message.message.chat_id, "Bot is restarting...")
     time.sleep(0.2)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
