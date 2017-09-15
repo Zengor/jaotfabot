@@ -14,7 +14,7 @@ def get_roles_file(chat_id):
     f_name = Path(str(chat_id)+'.role')
     if not f_name.is_file():
         return {}
-    with open(f_name, 'rb') as f:
+    with f_name.open(mode='rb') as f:
         roles = pickle.load(f)
     return roles
 def save_roles_file(chat_data, chat_id):
