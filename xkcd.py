@@ -27,8 +27,8 @@ def post_comic(comic, update):
     text = "Title: {}\nAlt: {}".format(comic['safe_title'], comic['alt'])
     # image = urllib.request.urlopen(comic['img']).read()
     image  = comic['img']
-    update.message.reply_photo(photo=image,
-                               caption=text)
+    update.message.reply_photo(photo=image)
+    update.message.reply_text(text)
 
 def get(bot, update, args):
     """
@@ -50,8 +50,12 @@ def get(bot, update, args):
 
 get_latest()
 if __name__ == "__main__":
-    n = int(input())
-    print(get_latest())
-    print(get_comic(n))
+    c = get_latest()
+    alt = c['alt']
+    print(alt)
+    print("{}".format(alt))
+    print("{}".format(c['alt']))
+    print("T: {}\nAlt: {}".format(c['safe_title'], c['alt']))
+    
     
     
