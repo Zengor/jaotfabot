@@ -84,7 +84,7 @@ def notify(bot, update, args, chat_data):
 def list_roles(bot, update, chat_data):
     roles = get_chat_roles(chat_data, update.message.chat_id)
     if not roles:
-        update.message.reply_text("No roles for this server")
+        update.message.reply_text("No roles for this chat")
         return
     response = ""
     for role,members in roles.items():
