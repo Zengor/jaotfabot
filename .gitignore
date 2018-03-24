@@ -1,3 +1,8 @@
+# emacs files
+*~
+# role files
+*.role
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

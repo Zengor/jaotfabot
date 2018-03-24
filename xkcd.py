@@ -13,8 +13,8 @@ latest_num = 1789
 
 def get_latest():
     response = urllib.request.urlopen("http://xkcd.com/info.0.json")
-    latest =json.loads(response.read()
-                       .decode(response.info().get_param('charset') or 'utf-8'))
+    latest = json.loads(response.read()
+                        .decode(response.info().get_param('charset') or 'utf-8'))
     latest_num = latest["num"]
     return latest
 
